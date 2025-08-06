@@ -1,11 +1,11 @@
 # Kanizsa Adjective Agent
 
-**VERSION:** 6.0.2 - Strong Typing & Code Quality  
+**VERSION:** 7.0.0 - Complete Separation of Concerns  
 **LAST UPDATED:** August 5, 2025, 14:25:00 CDT
 
 ## 🎯 **Independent Adjective Agent Repository**
 
-This repository contains the **Kanizsa Adjective Agent** - a standalone microservice that generates descriptive adjectives for photo analysis. It operates independently and communicates via HTTP APIs.
+This repository contains the **Kanizsa Adjective Agent** - a standalone microservice that generates descriptive adjectives for photo analysis. It operates independently and communicates via HTTP APIs as part of the Kanizsa platform ecosystem.
 
 ### **🏗️ Architecture Principles**
 
@@ -14,6 +14,25 @@ This repository contains the **Kanizsa Adjective Agent** - a standalone microser
 - **📦 Containerized**: Runs as a Docker container with zero host dependencies
 - **🔒 Secure**: Input validation and rate limiting
 - **📊 Observable**: Health checks and metrics
+
+## 🏗️ **Platform Integration**
+
+This Adjective Agent is part of the **Kanizsa Platform** - a professional photo management ecosystem consisting of three independent repositories:
+
+### **Related Repositories**
+- **Kanizsa Photo Categorizer**: Core platform and API gateway
+  - Repository: `kanizsa-photo-categorizer`
+  - URL: https://github.com/wcervin/kanizsa-photo-categorizer
+- **Kanizsa MCP Server**: AI integration and orchestration
+  - Repository: `kanizsa-mcp-server`
+  - URL: https://github.com/wcervin/kanizsa-mcp-server
+
+### **Communication Flow**
+```
+┌─────────────────┐    HTTP    ┌─────────────────┐    HTTP    ┌─────────────────┐
+│  Kanizsa Platform│ ────────── │  MCP Server     │ ────────── │  Adjective Agent│
+└─────────────────┘            └─────────────────┘            └─────────────────┘
+```
 
 ## 🚀 **Quick Start**
 
@@ -224,7 +243,7 @@ spec:
     spec:
       containers:
       - name: adjective-agent
-        image: kanizsa-adjective-agent:6.0.2
+        image: kanizsa-adjective-agent:7.0.0
         ports:
         - containerPort: 3000
 ```
@@ -258,6 +277,23 @@ curl -X POST http://localhost:3000/analyze \
   }'
 ```
 
+## 🔄 **Integration with Kanizsa Platform**
+
+### **Platform Communication**
+The Adjective Agent integrates seamlessly with the Kanizsa platform:
+
+1. **Receives requests** from the MCP Server or directly from the platform
+2. **Analyzes photos** using AI to generate descriptive adjectives
+3. **Returns results** with confidence scores and processing metadata
+4. **Provides monitoring** and health information
+
+### **Analysis Capabilities**
+The Adjective Agent specializes in:
+- **Photo Description**: Generating descriptive adjectives for photos
+- **Category Classification**: Organizing photos by style, mood, and content
+- **Confidence Scoring**: Providing reliability metrics for analysis results
+- **Batch Processing**: Efficiently analyzing multiple photos
+
 ## 🤝 **Contributing**
 
 1. Fork the repository
@@ -275,4 +311,5 @@ MIT License - see LICENSE file for details.
 **Repository:** Independent Adjective Agent  
 **Communication:** HTTP API only  
 **Deployment:** Containerized  
-**Dependencies:** None on other repositories
+**Dependencies:** None on other repositories  
+**Platform Integration:** Kanizsa Photo Management Ecosystem
