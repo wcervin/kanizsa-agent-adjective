@@ -1,13 +1,17 @@
 {
   "name": "kanizsa-adjective-agent",
-  "version": "7.0.1",
+  "version": "8.0.0",
   "description": "Kanizsa adjective agent for generating descriptive adjectives for photos",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "dev": "tsx src/index.ts"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "dev": "tsx src/index.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
   },
   "exports": {
     ".": {
@@ -24,5 +28,20 @@
     "jest": "^29.7.0",
     "tsx": "^4.6.2",
     "typescript": "^5.3.2"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/default-esm",
+    "extensionsToTreatAsEsm": [".ts"],
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    },
+    "testEnvironment": "node",
+    "testMatch": ["**/tests/**/*.test.ts"],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts"
+    ]
   }
 }

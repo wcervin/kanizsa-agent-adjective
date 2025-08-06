@@ -1,7 +1,12 @@
-import { Photo, AdjectiveResult, AnalysisOptions } from './types.js';
+import { Photo, AdjectiveResult, AnalysisOptions, AdjectiveCategories } from './types.js';
+import { ExpandableVocabularyManager } from './vocabulary-manager.js';
 
 export class AdjectiveAgent {
-  private readonly adjectiveCategories = {
+  private readonly version = '8.0.0';
+  private readonly agentName = 'AdjectiveAgent';
+  private vocabularyManager: ExpandableVocabularyManager;
+  
+  private readonly adjectiveCategories: AdjectiveCategories = {
     mood: ['serene', 'vibrant', 'melancholic', 'energetic', 'peaceful', 'dramatic', 'whimsical', 'mysterious'],
     visual: ['luminous', 'shadowy', 'colorful', 'monochromatic', 'textured', 'smooth', 'geometric', 'organic'],
     temporal: ['timeless', 'nostalgic', 'modern', 'vintage', 'ephemeral', 'eternal', 'fleeting', 'enduring'],
@@ -9,35 +14,51 @@ export class AdjectiveAgent {
     emotional: ['inspiring', 'contemplative', 'joyful', 'somber', 'hopeful', 'introspective', 'uplifting', 'profound']
   };
 
-
   constructor() {
-    // Standalone adjective agent - no external dependencies
+    this.vocabularyManager = new ExpandableVocabularyManager();
   }
 
   async analyzePhoto(photo: Photo, options: AnalysisOptions = {}): Promise<AdjectiveResult> {
     const {
       maxAdjectives = 10,
       includeCategories = true,
-      enhanceDescription = true
+      enhanceDescription = true,
+      learnFromInput = true,
+      expandVocabulary = true
     } = options;
 
+    // Learn from the photo if learning is enabled
+    if (learnFromInput) {
+      this.vocabularyManager.learnFromPhoto(photo);
+    }
+
     const existingAdjectives = this.extractExistingAdjectives(photo);
-    const generatedAdjectives = this.generateAdjectives(photo, existingAdjectives, maxAdjectives);
-    const categorizedAdjectives = this.categorizeAdjectives(generatedAdjectives);
+    const generatedAdjectives = expandVocabulary 
+      ? this.vocabularyManager.generateAdjectives(photo, existingAdjectives, maxAdjectives, {
+          useLearning: true,
+          preferFrequent: true
+        })
+      : this.generateAdjectivesLegacy(photo, existingAdjectives, maxAdjectives);
+    
+    const categorizedAdjectives = includeCategories 
+      ? this.categorizeAdjectives(generatedAdjectives)
+      : {};
     
     const enhancedDescription = enhanceDescription 
       ? this.createEnhancedDescription(photo, generatedAdjectives)
       : photo.description || '';
     
     const confidence = this.calculateConfidence(photo);
+    const vocabularyStats = this.vocabularyManager.getVocabularyStats();
     
     return {
       photoId: photo.id,
       adjectives: generatedAdjectives,
-      categories: includeCategories ? categorizedAdjectives : {},
+      categories: categorizedAdjectives,
       enhancedDescription,
       confidence,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      vocabularyStats
     };
   }
 
@@ -45,6 +66,82 @@ export class AdjectiveAgent {
     return Promise.all(photos.map(photo => this.analyzePhoto(photo, options)));
   }
 
+  /**
+   * Learn from external text sources to expand vocabulary
+   */
+  async learnFromText(text: string, context: string = 'general'): Promise<string[]> {
+    return this.vocabularyManager.learnFromText(text, context);
+  }
+
+  /**
+   * Learn from multiple text sources
+   */
+  async learnFromTextBatch(texts: string[], context: string = 'general'): Promise<string[]> {
+    const allLearned: string[] = [];
+    texts.forEach(text => {
+      allLearned.push(...this.vocabularyManager.learnFromText(text, context));
+    });
+    return allLearned;
+  }
+
+  /**
+   * Get vocabulary statistics
+   */
+  getVocabularyStats() {
+    return this.vocabularyManager.getVocabularyStats();
+  }
+
+  /**
+   * Get all available categories
+   */
+  getAllCategories(): string[] {
+    return this.vocabularyManager.getAllCategories();
+  }
+
+  /**
+   * Get adjectives by category
+   */
+  getAdjectivesByCategory(category: string): string[] {
+    return this.vocabularyManager.getAdjectivesByCategory(category);
+  }
+
+  /**
+   * Get most frequently used adjectives
+   */
+  getMostFrequentAdjectives(limit: number = 10) {
+    return this.vocabularyManager.getMostFrequentAdjectives(limit);
+  }
+
+  /**
+   * Export vocabulary for persistence
+   */
+  exportVocabulary() {
+    return this.vocabularyManager.exportVocabulary();
+  }
+
+  /**
+   * Import vocabulary from external source
+   */
+  importVocabulary(vocabulary: any): void {
+    this.vocabularyManager.importVocabulary(vocabulary);
+  }
+
+  /**
+   * Add custom adjective to vocabulary
+   */
+  addCustomAdjective(adjective: string, category: string, context: string = 'custom'): void {
+    this.vocabularyManager.addAdjective(adjective, category, context);
+  }
+
+  getVersion(): string {
+    return this.version;
+  }
+
+  getAgentName(): string {
+    return this.agentName;
+  }
+
+  // Legacy method for backward compatibility
   private extractExistingAdjectives(photo: Photo): string[] {
     const adjectives: string[] = [];
     const adjectivePatterns = /\b(beautiful|stunning|amazing|gorgeous|lovely|nice|great|wonderful|excellent|perfect)\b/gi;
@@ -63,7 +160,8 @@ export class AdjectiveAgent {
     return [...new Set(adjectives)];
   }
 
-  private generateAdjectives(photo: Photo, existing: string[], max: number): string[] {
+  // Legacy method for backward compatibility
+  private generateAdjectivesLegacy(photo: Photo, existing: string[], max: number): string[] {
     const generated: string[] = [];
     
     // Smart selection based on photo metadata
@@ -90,13 +188,11 @@ export class AdjectiveAgent {
   private categorizeAdjectives(adjectives: string[]): Record<string, string[]> {
     const categorized: Record<string, string[]> = {};
     
+    // Use vocabulary manager for categorization
     adjectives.forEach(adj => {
-      Object.entries(this.adjectiveCategories).forEach(([category, list]) => {
-        if (list.includes(adj)) {
-          if (!categorized[category]) categorized[category] = [];
-          categorized[category].push(adj);
-        }
-      });
+      const category = this.vocabularyManager.getAdjectivesByCategory(adj)[0] || 'descriptive';
+      if (!categorized[category]) categorized[category] = [];
+      categorized[category].push(adj);
     });
     
     return categorized;
