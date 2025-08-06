@@ -24,8 +24,8 @@ This Adjective Agent is part of the **Kanizsa Platform** - a professional photo 
   - Repository: `kanizsa-photo-categorizer`
   - URL: https://github.com/wcervin/kanizsa-photo-categorizer
 - **Kanizsa AI Orchestrator**: AI integration and orchestration
-  - Repository: `kanizsa-mcp-server`
-  - URL: https://github.com/wcervin/kanizsa-mcp-server
+  - Repository: `kanizsa-ai-orchestrator`
+  - URL: https://github.com/wcervin/kanizsa-ai-orchestrator
 
 ### **Communication Flow**
 ```

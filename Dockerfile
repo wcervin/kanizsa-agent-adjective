@@ -1,5 +1,5 @@
 # Adjective Agent Dockerfile
-# Kanizsa v6.0.2 - Strong Typing & Code Quality
+# Kanizsa v7.0.0 - Complete Separation of Concerns
 # LAST UPDATED: August 5, 2025, 14:25:00 CDT
 
 # Multi-stage build for optimization
