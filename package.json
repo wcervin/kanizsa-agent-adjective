@@ -1,6 +1,6 @@
 {
   "name": "kanizsa-adjective-agent",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Kanizsa adjective agent for generating descriptive adjectives for photos",
   "main": "dist/index.js",
   "type": "module",
