@@ -157,7 +157,7 @@ print_status "Commit message: $COMMIT_MESSAGE"
 print_status "Next steps:"
 echo "  1. Update main platform to match this version"
 echo "  2. Run sync_all_versions.sh in main platform"
-echo "  3. Commit and push changes in MCP Server"
+echo "  3. Commit and push changes in AI Orchestrator"
 echo "  4. Test all components together"
 echo "  5. Tag release if ready: git tag v$NEW_VERSION && git push origin v$NEW_VERSION"
 

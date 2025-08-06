@@ -23,14 +23,14 @@ This Adjective Agent is part of the **Kanizsa Platform** - a professional photo 
 - **Kanizsa Photo Categorizer**: Core platform and API gateway
   - Repository: `kanizsa-photo-categorizer`
   - URL: https://github.com/wcervin/kanizsa-photo-categorizer
-- **Kanizsa MCP Server**: AI integration and orchestration
+- **Kanizsa AI Orchestrator**: AI integration and orchestration
   - Repository: `kanizsa-mcp-server`
   - URL: https://github.com/wcervin/kanizsa-mcp-server
 
 ### **Communication Flow**
 ```
 ┌─────────────────┐    HTTP    ┌─────────────────┐    HTTP    ┌─────────────────┐
-│  Kanizsa Platform│ ────────── │  MCP Server     │ ────────── │  Adjective Agent│
+│  Kanizsa Platform│ ────────── │  AI Orchestrator│ ────────── │  Adjective Agent│
 └─────────────────┘            └─────────────────┘            └─────────────────┘
 ```
 
@@ -250,9 +250,9 @@ spec:
 
 ## 🔄 **Integration Examples**
 
-### **MCP Server Integration**
+### **AI Orchestrator Integration**
 ```typescript
-// MCP Server calls Adjective Agent via HTTP
+// AI Orchestrator calls Adjective Agent via HTTP
 const response = await fetch('http://adjective-agent:3000/analyze', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
@@ -282,7 +282,7 @@ curl -X POST http://localhost:3000/analyze \
 ### **Platform Communication**
 The Adjective Agent integrates seamlessly with the Kanizsa platform:
 
-1. **Receives requests** from the MCP Server or directly from the platform
+1. **Receives requests** from the AI Orchestrator or directly from the platform
 2. **Analyzes photos** using AI to generate descriptive adjectives
 3. **Returns results** with confidence scores and processing metadata
 4. **Provides monitoring** and health information
