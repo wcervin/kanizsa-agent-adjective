@@ -1,7 +1,7 @@
 # Kanizsa Adjective Agent
 
-**VERSION:** 10.0.1 - Adjective Agent Release  
-**LAST UPDATED:** August 5, 2025, 14:25:00 CDT
+**VERSION:** 10.0.1 - MCP Server Compatibility & Comprehensive API Coverage  
+**LAST UPDATED:** August 6, 2025, 21:30:00 CDT
 
 ## 🎯 **Agent Overview**
 
@@ -385,8 +385,11 @@ npm run build
 # Build TypeScript
 npm run build
 
-# Run in development mode
+# Start API server in development mode
 npm run dev
+
+# Start API server in production mode
+npm start
 
 # Run tests
 npm test
@@ -396,6 +399,17 @@ npm run lint
 
 # Format code
 npm run format
+```
+
+### **API Server Development**
+```bash
+# Start the API server
+npm run dev
+
+# The server will be available at:
+# - Health check: http://localhost:3000/health
+# - API info: http://localhost:3000/info
+# - Documentation: http://localhost:3000/version
 ```
 
 ## 🏗️ **Repository Independence**
@@ -428,6 +442,68 @@ adjective-agent:
     - NODE_ENV=production
   restart: unless-stopped
 ```
+
+## 🌐 **Comprehensive API Coverage**
+
+The Adjective Agent provides **100% API coverage** with complete MCP server compatibility:
+
+### **API Endpoints (Port 3000)**
+
+#### **Health & Status**
+- `GET /health` - Health check (MCP Server compatible)
+- `GET /status` - Detailed system status
+- `GET /info` - Agent information (MCP Server compatible)
+- `GET /version` - Version information
+
+#### **Photo Analysis**
+- `POST /analyze` - Analyze single photo (MCP Server compatible)
+- `POST /analyze/batch` - Analyze multiple photos (MCP Server compatible)
+- `POST /api/photos/analyze` - Analyze with detailed options
+
+#### **Vocabulary Management**
+- `GET /vocabulary/stats` - Get vocabulary statistics
+- `GET /vocabulary/categories` - Get all categories
+- `GET /vocabulary/categories/{category}` - Get adjectives by category
+- `GET /vocabulary/frequent` - Get most frequent adjectives
+- `GET /vocabulary/export` - Export vocabulary
+- `POST /vocabulary/import` - Import vocabulary
+- `POST /vocabulary/adjectives` - Add custom adjective
+
+#### **Agent Management**
+- `GET /agent/info` - Get agent information
+- `GET /agent/capabilities` - Get agent capabilities
+
+#### **Learning & Training**
+- `POST /learning/text` - Learn from text
+- `POST /learning/text/batch` - Learn from multiple texts
+- `GET /learning/stats` - Get learning statistics
+
+### **MCP Server Compatibility**
+
+The agent implements the **exact protocol** expected by the MCP server:
+
+```javascript
+// MCP Server calling Adjective Agent
+const agentResponse = await fetch('http://adjective-agent:3000/analyze', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    photoUrl: validatedArgs.photo.url,
+    options: validatedArgs.options
+  })
+});
+
+if (agentResponse.ok) {
+  const result = await agentResponse.json();
+  return {
+    content: [{ type: 'text', text: JSON.stringify(result, null, 2) }]
+  };
+}
+```
+
+### **API Documentation**
+
+See [API_DOCUMENTATION.md](API_DOCUMENTATION.md) for comprehensive endpoint documentation with examples, rate limits, and error codes.
 
 ## 🔄 **Platform Integration**
 
