@@ -1,6 +1,6 @@
 # Kanizsa Agent Template
 
-**VERSION:** 8.0.0 - Agent Template  
+**VERSION:** 10.1.0 - Agent Template  
 **LAST UPDATED:** August 5, 2025, 14:25:00 CDT
 
 ## 🎯 **Kanizsa Agent Template**
@@ -46,7 +46,7 @@ kanizsa-agent-[name]/
 ```json
 {
   "name": "kanizsa-[agent-name]-agent",
-  "version": "8.0.0",
+  "version": "10.1.0",
   "description": "Kanizsa [agent-name] agent for [specific functionality]",
   "main": "dist/index.js",
   "type": "module",
@@ -325,7 +325,7 @@ LABEL maintainer="Kanizsa Team"
 ```markdown
 # Kanizsa [AgentName] Agent
 
-**VERSION:** 7.0.1 - [Specific Feature]  
+**VERSION:** 10.1.0 - [Specific Feature]  
 **LAST UPDATED:** [Date]
 
 ## 🎯 **Agent Overview**

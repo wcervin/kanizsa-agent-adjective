@@ -46,6 +46,6 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 CMD ["node", "-e", "console.log('Kanizsa Adjective Agent library loaded successfully')"]
 
 # Labels
-LABEL version="8.0.1"
+LABEL version="10.1.0"
 LABEL description="Kanizsa Adjective Agent - TypeScript Library"
 LABEL maintainer="Kanizsa Team"
