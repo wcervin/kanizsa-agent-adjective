@@ -5,8 +5,8 @@
  * that is 100% compatible with the MCP server protocol and provides
  * complete API coverage for photo analysis and vocabulary management.
  * 
- * VERSION: 10.2.0 - MCP Server Compatibility
- * LAST UPDATED: August 08, 2025, 22:00:19 CDT
+ * VERSION: 10.2.1 - MCP Server Compatibility
+ * LAST UPDATED: August 08, 2025, 22:01:02 CDT
  */
 
 import express from 'express';
@@ -118,7 +118,7 @@ export class AdjectiveAgentApiServer {
         res.json({
           status: 'healthy',
           timestamp: new Date().toISOString(),
-          version: '10.2.0',
+          version: '10.2.1',
           agent: {
             name: this.agent.getAgentName(),
             version: this.agent.getVersion(),
@@ -147,7 +147,7 @@ export class AdjectiveAgentApiServer {
         const stats = this.agent.getVocabularyStats();
         res.json({
           timestamp: new Date().toISOString(),
-          version: '10.2.0',
+          version: '10.2.1',
           agent: {
             name: this.agent.getAgentName(),
             version: this.agent.getVersion(),
@@ -172,7 +172,7 @@ export class AdjectiveAgentApiServer {
     this.app.get('/info', (req, res) => {
       res.json({
         name: 'Adjective Agent',
-        version: '10.2.0',
+        version: '10.2.1',
         description: 'Generates descriptive adjectives for photos with infinite vocabulary learning',
         capabilities: ['photo_analysis', 'adjective_generation', 'vocabulary_learning'],
         author: 'Kanizsa Team',
@@ -190,7 +190,7 @@ export class AdjectiveAgentApiServer {
     // Version endpoint
     this.app.get('/version', (req, res) => {
       res.json({
-        version: '10.2.0',
+        version: '10.2.1',
         name: 'kanizsa-adjective-agent',
         description: 'Kanizsa Adjective Agent with comprehensive API coverage',
         timestamp: new Date().toISOString()
