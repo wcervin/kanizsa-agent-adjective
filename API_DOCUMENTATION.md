@@ -30,7 +30,7 @@ All responses include standard headers:
 
 ```
 X-Request-ID: <correlation-id>
-X-Kanizsa-Version: 10.1.0
+X-Kanizsa-Version: 10.2.0
 ```
 
 ## Error Handling
@@ -59,10 +59,10 @@ Standard error response format:
 {
   "status": "healthy",
   "timestamp": "2025-08-06T21:30:00Z",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "agent": {
     "name": "AdjectiveAgent",
-    "version": "10.1.0",
+    "version": "10.2.0",
     "status": "active"
   },
   "vocabulary": {
@@ -87,10 +87,10 @@ Detailed system status and metrics.
 ```json
 {
   "timestamp": "2025-08-06T21:30:00Z",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "agent": {
     "name": "AdjectiveAgent",
-    "version": "10.1.0",
+    "version": "10.2.0",
     "status": "active"
   },
   "vocabulary": {
@@ -128,7 +128,7 @@ Detailed system status and metrics.
 ```json
 {
   "name": "Adjective Agent",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "description": "Generates descriptive adjectives for photos with infinite vocabulary learning",
   "capabilities": [
     "photo_analysis",
@@ -154,7 +154,7 @@ Get version information.
 **Response:**
 ```json
 {
-  "version": "10.1.0",
+  "version": "10.2.0",
   "name": "kanizsa-adjective-agent",
   "description": "Kanizsa Adjective Agent with comprehensive API coverage",
   "timestamp": "2025-08-06T21:30:00Z"
@@ -560,7 +560,7 @@ Get agent information.
   "success": true,
   "data": {
     "name": "AdjectiveAgent",
-    "version": "10.1.0",
+    "version": "10.2.0",
     "vocabulary": {
       "totalAdjectives": 1250,
       "categories": 8,
@@ -715,7 +715,7 @@ GET /health
 ```json
 {
   "status": "healthy",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "capabilities": ["photo_analysis", "adjective_generation", "vocabulary_learning"],
   "uptime": 3600
 }
@@ -761,7 +761,7 @@ GET /info
 ```json
 {
   "name": "Adjective Agent",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "description": "Generates descriptive adjectives for photos with infinite vocabulary learning",
   "capabilities": ["photo_analysis", "adjective_generation", "vocabulary_learning"],
   "author": "Kanizsa Team",
