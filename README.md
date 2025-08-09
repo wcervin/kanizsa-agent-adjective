@@ -10,7 +10,8 @@ The **Kanizsa Adjective Agent** is a TypeScript library that generates descripti
 ### **🏗️ Architecture**
 
 - **🔗 Independent Repository**: Self-contained with no direct dependencies on other repositories
-- **📦 Library-First**: Primary interface is a TypeScript library, not HTTP API
+- **🐳 Containerized**: Zero host dependencies - runs entirely in Docker containers
+- **🌐 HTTP API**: Primary interface via RESTful HTTP API
 - **🔒 Type-Safe**: Comprehensive TypeScript types and validation
 - **🧪 Testable**: Comprehensive test coverage with Jest
 - **📊 Observable**: Built-in confidence scoring and processing metrics
@@ -21,35 +22,58 @@ The **Kanizsa Adjective Agent** is a TypeScript library that generates descripti
 
 ### **Installation**
 ```bash
-npm install kanizsa-adjective-agent
+# Containerized installation (zero host dependencies)
+docker pull kanizsa/adjective-agent:latest
+
+# Or build from source
+git clone https://github.com/wcervin/kanizsa-agent-adjective.git
+cd kanizsa-agent-adjective
+docker build -t kanizsa/adjective-agent .
 ```
 
 ### **Basic Usage**
-```typescript
-import { AdjectiveAgent } from 'kanizsa-adjective-agent';
+```bash
+# Run the agent container
+docker run -d --name kanizsa-adjective-agent \
+  -p 3001:3001 \
+  kanizsa/adjective-agent:latest
 
-const agent = new AdjectiveAgent();
+# Use via HTTP API
+curl -X POST http://localhost:3001/api/analyze \
+  -H "Content-Type: application/json" \
+  -d '{
+    "photo": {
+      "id": "photo-123",
+      "path": "/photos/sunset.jpg",
+      "filename": "sunset.jpg",
+      "size": 2048576,
+      "mimeType": "image/jpeg",
+      "createdAt": "2025-08-05T14:25:00Z",
+      "title": "Golden Sunset",
+      "description": "A beautiful sunset over the mountains",
+      "tags": ["nature", "landscape", "golden"]
+    },
+    "options": {
+      "maxAdjectives": 10,
+      "includeCategories": true,
+      "enhanceDescription": true
+    }
+  }'
+```
 
-const photo = {
-  id: 'photo-123',
-  path: '/photos/sunset.jpg',
-  filename: 'sunset.jpg',
-  size: 2048576,
-  mimeType: 'image/jpeg',
-  createdAt: '2025-08-05T14:25:00Z',
-  title: 'Golden Sunset',
-  description: 'A beautiful sunset over the mountains',
-  tags: ['nature', 'landscape', 'golden']
-};
-
-const result = await agent.analyzePhoto(photo, {
-  maxAdjectives: 10,
-  includeCategories: true,
-  enhanceDescription: true
-});
-
-console.log(result.adjectives); // ['golden', 'beautiful', 'warm', 'radiant', ...]
-console.log(result.categories); // { mood: ['serene'], visual: ['luminous'], ... }
+### **Docker Compose Integration**
+```yaml
+# Add to your docker-compose.yml
+adjective-agent:
+  image: kanizsa/adjective-agent:latest
+  container_name: kanizsa-adjective-agent
+  ports:
+    - "3001:3001"
+  environment:
+    - NODE_ENV=production
+  restart: unless-stopped
+  networks:
+    - kanizsa-network
 ```
 
 ## 📋 **API Reference**
