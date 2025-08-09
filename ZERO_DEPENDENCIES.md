@@ -10,8 +10,8 @@ The **Kanizsa Adjective Agent** is designed with a **zero host dependencies** ar
 ### **🏗️ Core Principles**
 
 - **🔗 Self-Contained**: All logic is contained within the agent
-- **📦 Library-First**: Primary interface is a TypeScript library
-- **🌐 Platform-Agnostic**: Runs anywhere Node.js is available
+- **🐳 Containerized**: Zero host dependencies - runs entirely in Docker containers
+- **🌐 HTTP API**: Primary interface via RESTful HTTP API
 - **🔒 No External Dependencies**: No network calls, file system access, or database connections
 - **📊 Pure Functions**: All operations are pure and deterministic
 
